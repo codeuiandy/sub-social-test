@@ -7,9 +7,7 @@ export const httpGet = async (url) => {
     return alert("Please check your internet");
   }
   try {
-    const res = await axios.get(`${baseUrl}${url}`, {
-      headers: { Authorization: `Bearer ${localStorage.token}` },
-    });
+    const res = await axios.get(`${baseUrl}${url}`);
     return res.data;
   } catch (error) {
     return { er: error.response.data };

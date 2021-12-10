@@ -9,21 +9,20 @@ const Network = () => {
   }, []);
 
   useEffect(() => {
-    // reCallNetwork();
+    reCallNetwork();
   }, []);
 
-  //   const reCallNetwork = () => {
-  //     setInterval(async () => {
-  //       getNetworks();
-  //     }, 300000);
-  //   };
+  const reCallNetwork = () => {
+    setInterval(async () => {
+      getNetworks();
+    }, 300000);
+  };
 
   const getNetworks = async () => {
     const res = await httpGet("api/v1/chains/properties");
     if (res.er) {
       return alert("Error found");
     }
-    setLoading(false);
     let convertObjectToArray = Object.values(res);
     let filterArray = convertObjectToArray.filter((data) => {
       return data.tokenSymbol && data.tokenDecimals;
@@ -38,6 +37,7 @@ const Network = () => {
       newArray.push(newObj);
     }
     setData(newArray);
+    setLoading(false);
   };
 
   const getStatus = async (name) => {
@@ -81,11 +81,7 @@ const Network = () => {
       <div className="app-header-wrap">
         <h1 className="app-header">Connections</h1>
       </div>
-      {data.length == 0 ? (
-        <p className="app-loading">Loading....</p>
-      ) : (
-        <NetworkCard />
-      )}
+      {loading ? <p className="app-loading">Loading...</p> : <NetworkCard />}
     </div>
   );
 };
