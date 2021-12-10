@@ -1,0 +1,87 @@
+.app-header-wrap {
+  background-color: black;
+  height: 75px;
+  width: 100%;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  z-index: 4;
+}
+
+.app-header {
+  color: white;
+}
+
+.connections {
+  margin-top: 98px;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0 30px 30px 30px;
+}
+
+.connect {
+  width: 300px;
+  height: 300px;
+  background-color: rgba(128, 128, 128, 0.185);
+  border-radius: 5px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  flex-direction: column;
+  padding-top: 20px;
+  cursor: pointer;
+  transition: all 400ms ease;
+}
+
+.connect:hover {
+  transform: translateY(-10px);
+}
+
+.connect img {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+}
+
+.connect h2 {
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+.connect h3 {
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+.app-loading {
+  margin-top: 120px;
+  color: black;
+  font-size: 20px;
+  text-align: center;
+}
+
+.status-container {
+  display: flex;
+  align-items: center;
+}
+
+.status-rect {
+  width: 13px;
+  height: 10px;
+  border-radius: 2px;
+  margin-top: 6px;
+  margin-left: 6px;
+}
+.disconnected {
+  background-color: red;
+}
+
+.Connected {
+  background-color: green;
+}
