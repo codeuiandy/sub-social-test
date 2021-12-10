@@ -28,7 +28,6 @@ const Network = () => {
     let filterArray = convertObjectToArray.filter((data) => {
       return data.tokenSymbol && data.tokenDecimals;
     });
-
     const newArray = [];
     for (let index = 0; index < filterArray.length; index++) {
       const newObj = {
@@ -83,7 +82,7 @@ const Network = () => {
         <h1 className="app-header">Connections</h1>
       </div>
       {data.length == 0 ? (
-        <p className="app-loading">Loading...</p>
+        <p className="app-loading">Loading....</p>
       ) : (
         <NetworkCard />
       )}
