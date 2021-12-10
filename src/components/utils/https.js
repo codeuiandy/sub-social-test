@@ -4,7 +4,7 @@ export const baseUrl = "https://app.subsocial.network/subid/";
 
 export const httpGet = async (url) => {
   if (!navigator.onLine) {
-    return alert("Please check your internet", "Opps!", 3000);
+    return alert("Please check your internet");
   }
   try {
     const res = await axios.get(`${baseUrl}${url}`, {
@@ -18,7 +18,7 @@ export const httpGet = async (url) => {
 
 export const httpPost = async (url, postBody) => {
   if (!navigator.onLine) {
-    return alert("Please check your internet", "Opps!", 3000);
+    return alert("Please check your internet");
   }
   try {
     const res = await axios.post(`${baseUrl}${url}`, postBody, {
