@@ -49,7 +49,7 @@ const Network = () => {
     return res;
   };
 
-  const MapData = () => {
+  const NetworkCard = () => {
     return loading ? null : (
       <div className="connections">
         {data.map((res, index) => {
@@ -59,7 +59,7 @@ const Network = () => {
               <img src={`${baseUrl}/icons/${res?.icon}`} alt="" />
               <h2>{res?.name}</h2>
 
-              {res.status == true ? (
+              {res.status ? (
                 <div className="status-container">
                   <h3>Connected</h3>
                   <div className="status-rect Connected"></div>
@@ -81,7 +81,7 @@ const Network = () => {
       <div className="app-header-wrap">
         <h1 className="app-header">Connections</h1>
       </div>
-      {loading ? <p className="app-loading">Loading...</p> : <MapData />}
+      {loading ? <p className="app-loading">Loading...</p> : <NetworkCard />}
     </div>
   );
 };
