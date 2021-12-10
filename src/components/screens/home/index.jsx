@@ -27,12 +27,22 @@ const Network = () => {
     let filterArray = convertObjectToArray.filter((data) => {
       return data.tokenSymbol && data.tokenDecimals;
     });
-    setData(convertObjectToArray);
+    const newArray = [];
+    for (let index = 0; index < filterArray.length; index++) {
+      const newObj = {
+        status: await getStatus(filterArray[index].name),
+        icon: filterArray[index].icon,
+        name: filterArray[index].name,
+      };
+      newArray.push(newObj);
+    }
+    setData(newArray);
     setLoading(false);
   };
 
   const getStatus = async (name) => {
-    const res = await httpGet(`api/v1/check/${name}`);
+    let convertToLower = name.toLowerCase();
+    const res = await httpGet(`api/v1/check/${convertToLower}`);
     if (res.er) {
       return "Not found";
     }
@@ -43,14 +53,15 @@ const Network = () => {
     return loading ? null : (
       <div className="connections">
         {data.map((res, index) => {
+          console.log(res);
           return (
             <div key={index} className="connect">
               <img src={`${baseUrl}/icons/${res?.icon}`} alt="" />
               <h2>{res?.name}</h2>
 
-              {getStatus(res.name) == true ? (
+              {res.status == true ? (
                 <div className="status-container">
-                  <h3>Disconnected</h3>
+                  <h3>Connected</h3>
                   <div className="status-rect Connected"></div>
                 </div>
               ) : (
