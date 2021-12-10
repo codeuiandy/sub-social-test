@@ -8,6 +8,16 @@ const Network = () => {
     getNetworks();
   }, []);
 
+  useEffect(() => {
+    reCallNetwork();
+  }, []);
+
+  const reCallNetwork = () => {
+    setInterval(async () => {
+      getNetworks();
+    }, 300000);
+  };
+
   const getNetworks = async () => {
     const res = await httpGet("api/v1/chains/properties");
     if (res.er) {
@@ -17,7 +27,6 @@ const Network = () => {
     let filterArray = convertObjectToArray.filter((data) => {
       return data.tokenSymbol && data.tokenDecimals;
     });
-    console.log(filterArray);
     setData(convertObjectToArray);
     setLoading(false);
   };
@@ -34,7 +43,6 @@ const Network = () => {
     return loading ? null : (
       <div className="connections">
         {data.map((res, index) => {
-          console.log(res.name);
           return (
             <div key={index} className="connect">
               <img src={`${baseUrl}/icons/${res?.icon}`} alt="" />
