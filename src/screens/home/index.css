@@ -37,7 +37,7 @@
   /* justify-content: center; */
   flex-direction: column;
   padding-top: 30px;
-  padding-bottom: 30px;
+  padding-bottom: 20px;
   cursor: pointer;
   transition: all 100ms ease;
 }
@@ -91,7 +91,7 @@
 }
 
 @media (max-width: 500px) {
-  .connections {
+  .home-page-wrap {
     padding: 0 10px 10px 10px;
   }
 }
