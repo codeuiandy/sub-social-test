@@ -1,27 +1,29 @@
-.app-header-wrap {
-  background-color: black;
-  height: 75px;
-  width: 100%;
-  position: fixed;
+.home-page-wrap {
+  padding: 0 20px 30px 20px;
+}
+.home-page-header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  top: 0;
-  z-index: 4;
+  margin-bottom: 20px;
 }
 
-.app-header {
-  color: white;
+.home-page-header select {
+  border: 1px solid #970191;
+  padding: 10px 20px 10px 20px;
+  border-radius: 5px;
+  color: #970191;
+  outline: none;
+}
+
+.home-page-header h2 {
+  font-size: 1.5rem;
 }
 
 .connections {
-  margin-top: 87px;
-  position: relative;
-  z-index: 2;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  padding: 0 20px 30px 20px;
-  grid-gap: 10px;
+  grid-gap: 15px;
 }
 
 .connect {
@@ -34,13 +36,15 @@
   align-items: center;
   /* justify-content: center; */
   flex-direction: column;
-  padding-top: 20px;
+  padding-top: 30px;
+  padding-bottom: 30px;
   cursor: pointer;
-  transition: all 200ms ease;
+  transition: all 100ms ease;
 }
 
 .connect:hover {
   transform: translateY(-3px);
+  background-color: rgba(128, 128, 128, 0.342);
 }
 
 .connect img {
@@ -60,7 +64,7 @@
 }
 
 .app-loading {
-  margin-top: 100px;
+  margin-top: 30px;
   color: black;
   font-size: 20px;
   text-align: center;

@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { baseUrl, httpGet } from "../../utils/https";
 import "./index.css";
+import Layout from "../../components/layout/index";
 const Network = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [connection, setConnection] = useState([]);
+  const [activity, setActivity] = useState("");
   useEffect(() => {
-    getNetworks();
+    getConnections();
   }, []);
 
   useEffect(() => {
-    reCallNetwork();
+    reCallConnection();
   }, []);
 
-  const reCallNetwork = () => {
+  const reCallConnection = () => {
     setInterval(async () => {
-      getNetworks();
+      getConnections();
     }, 300000);
   };
 
-  const getNetworks = async () => {
+  const getConnections = async () => {
     const res = await httpGet("api/v1/chains/properties");
     if (res.er) {
       return alert("Error found");
@@ -37,10 +40,12 @@ const Network = () => {
       newArray.push(newObj);
     }
     setData(newArray);
+    setConnection(newArray);
     setLoading(false);
   };
 
   const getStatus = async (name) => {
+    // Gets company connection status
     let convertToLower = name.toLowerCase();
     const res = await httpGet(`api/v1/check/${convertToLower}`);
     if (res.er) {
@@ -49,10 +54,32 @@ const Network = () => {
     return res;
   };
 
+  const filterActivity = (type) => {
+    // Filter Connections
+    setActivity(type);
+    if (type == "active") {
+      const filterActive = data.filter((connection) => {
+        return connection.status == true;
+      });
+      setConnection(filterActive);
+    }
+
+    if (type == "inactive") {
+      const filterActive = data.filter((connection) => {
+        return connection.status == false;
+      });
+      setConnection(filterActive);
+    }
+
+    if (type == "all") {
+      setConnection(data);
+    }
+  };
+
   const NetworkCard = () => {
     return loading ? null : (
       <div className="connections">
-        {data.map((res, index) => {
+        {connection?.map((res, index) => {
           console.log(res);
           return (
             <div key={index} className="connect">
@@ -77,12 +104,24 @@ const Network = () => {
     );
   };
   return (
-    <div>
-      <div className="app-header-wrap">
-        <h1 className="app-header">Connections</h1>
-      </div>
-      {loading ? <p className="app-loading">Loading...</p> : <NetworkCard />}
-    </div>
+    <Layout>
+      {loading ? (
+        <p className="app-loading">Loading...</p>
+      ) : (
+        <div className="home-page-wrap">
+          <div className="home-page-header">
+            <h2>Connections</h2>
+            <select onChange={(e) => filterActivity(e.target.value)}>
+              <option value="">Select activity</option>
+              <option value="all">All</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
+          <NetworkCard />
+        </div>
+      )}
+    </Layout>
   );
 };
 
