@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import HomePage from './screens/home/index'
+import HomePage from './screens/home/index.tsx'
 function App() {
   return (
     //P.S >> I didnt add react router because it just a page

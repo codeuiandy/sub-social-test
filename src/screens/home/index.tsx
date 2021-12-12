@@ -21,18 +21,24 @@ const Network = () => {
     }, 300000);
   };
 
+interface ConnectionItem{
+  status:Promise<void>,
+  icon:any,
+  name:any
+
+}
   const getConnections = async () => {
     const res = await httpGet("api/v1/chains/properties");
     if (res.er) {
       return alert("Error found");
     }
     let convertObjectToArray = Object.values(res);
-    let filterArray = convertObjectToArray.filter((data) => {
+    let filterArray = convertObjectToArray.filter((data:any) => {
       return data.tokenSymbol && data.tokenDecimals;
     });
     const newArray = [];
     for (let index = 0; index < filterArray.length; index++) {
-      const newObj = {
+      const newObj:ConnectionItem = {
         status: await getStatus(filterArray[index].name),
         icon: filterArray[index].icon,
         name: filterArray[index].name,
@@ -44,21 +50,21 @@ const Network = () => {
     setLoading(false);
   };
 
-  const getStatus = async (name) => {
+  const getStatus = async (name:string) => {
     // Gets company connection status
     let convertToLower = name.toLowerCase();
     const res = await httpGet(`api/v1/check/${convertToLower}`);
     if (res.er) {
-      return "Not found";
+      return false;
     }
     return res;
   };
 
-  const filterActivity = (type) => {
+  const filterActivity = (type:string) => {
     // Filter Connections
     setActivity(type);
     if (type == "active") {
-      const filterActive = data.filter((connection) => {
+      const filterActive = data.filter((connection:any) => {
         return connection.status == true;
       });
       setConnection(filterActive);
