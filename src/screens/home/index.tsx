@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { baseUrl, httpGet } from "../../utils/https";
+import React, {useEffect, useState} from "react";
+import {baseUrl, httpGet} from "../../utils/https";
 import "./index.css";
 import Layout from "../../components/layout/index";
 const Network = () => {
@@ -21,36 +21,36 @@ const Network = () => {
     }, 300000);
   };
 
-interface ConnectionItem{
-  status:Promise<void>,
-  icon:any,
-  name:any
-
-}
+  
   const getConnections = async () => {
     const res = await httpGet("api/v1/chains/properties");
     if (res.er) {
       return alert("Error found");
     }
     let convertObjectToArray = Object.values(res);
-    let filterArray = convertObjectToArray.filter((data:any) => {
+    let filterArray = convertObjectToArray.filter((data: any) => {
       return data.tokenSymbol && data.tokenDecimals;
     });
     const newArray = [];
     for (let index = 0; index < filterArray.length; index++) {
-      const newObj:ConnectionItem = {
+      const newObj: any = {
+        // @ts-ignore
         status: await getStatus(filterArray[index].name),
+        // @ts-ignore
         icon: filterArray[index].icon,
+        // @ts-ignore
         name: filterArray[index].name,
       };
       newArray.push(newObj);
     }
+    // @ts-ignore
     setData(newArray);
+    // @ts-ignore
     setConnection(newArray);
     setLoading(false);
   };
 
-  const getStatus = async (name:string) => {
+  const getStatus = async (name: string) => {
     // Gets company connection status
     let convertToLower = name.toLowerCase();
     const res = await httpGet(`api/v1/check/${convertToLower}`);
@@ -60,32 +60,36 @@ interface ConnectionItem{
     return res;
   };
 
-  const filterActivity = (type:string) => {
+  const filterActivity = (type: string) => {
     // Filter Connections
-    setActivity(type);
-    if (type == "active") {
-      const filterActive = data.filter((connection:any) => {
-        return connection.status == true;
-      });
-      setConnection(filterActive);
+
+
+    switch (type) {
+      case "active":
+        const filterActive = data.filter((connection: any) => {
+          return connection.status == true;
+        });
+        setConnection(filterActive);
+        break;
+
+        case "inactive":
+          const filterInactive = data.filter((connection: any) => {
+            return connection.status == false;
+          });
+          setConnection(filterInactive);
+          break;
+    
+      default:
+        setConnection(data);
+        break;
     }
 
-    if (type == "inactive") {
-      const filterActive = data.filter((connection) => {
-        return connection.status == false;
-      });
-      setConnection(filterActive);
-    }
-
-    if (type == "all") {
-      setConnection(data);
-    }
   };
 
   const NetworkCard = () => {
     return loading ? null : (
       <div className="connections">
-        {connection?.map((res, index) => {
+        {connection?.map((res: any, index: number) => {
           console.log(res);
           return (
             <div key={index} className="connect">
